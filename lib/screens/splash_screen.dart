@@ -130,7 +130,7 @@ class _SplashState extends State<SplashScreen> with TickerProviderStateMixin {
               )),
               ScaleTransition(scale: _logoScale, child: FadeTransition(opacity: _logoOpacity,
                 child: Column(children: [
-                  _glowTitle('SPACE', _glow.value), _glowTitle('SHOOTER', _glow.value),
+                  _glowTitle('ULTIMATE', _glow.value), _glowTitle('SPACE WAR', _glow.value),
                 ]),
               )),
               const SizedBox(height: 14),
@@ -156,7 +156,7 @@ class _SplashState extends State<SplashScreen> with TickerProviderStateMixin {
   );
 
   Widget _glowTitle(String text, double glow) => Text(text, style: TextStyle(
-    fontSize: 52, fontWeight: FontWeight.w900, letterSpacing: 8, height: 1.05,
+    fontSize: 42, fontWeight: FontWeight.w900, letterSpacing: 6, height: 1.05,
     foreground: Paint()..shader = const LinearGradient(
         colors: [Colors.cyanAccent, Colors.white, Colors.blueAccent])
         .createShader(const Rect.fromLTWH(0, 0, 280, 60)),

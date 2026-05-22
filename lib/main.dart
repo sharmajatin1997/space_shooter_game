@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
-
 part 'models/models.dart';
 part 'core/sound_manager.dart';
 part 'painters/painters.dart';
@@ -22,24 +21,15 @@ void main() {
   runApp(const SpaceShooterApp());
 }
 
-// ══════════════════════════════════════════════════════════════
-// APP ROOT
-// ══════════════════════════════════════════════════════════════
-
 class SpaceShooterApp extends StatelessWidget {
   const SpaceShooterApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Space Shooter',
+      title: 'Ultimate Space War',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       home: const SplashScreen(),
     );
   }
 }
-
-// ══════════════════════════════════════════════════════════════
-// GAME SETTINGS  (sound / music / vibration)
-// ══════════════════════════════════════════════════════════════
-

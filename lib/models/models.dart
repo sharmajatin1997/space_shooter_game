@@ -27,10 +27,6 @@ class GameSettings {
       );
 }
 
-// ══════════════════════════════════════════════════════════════
-// LEVEL CONFIG  (difficulty per level)
-// ══════════════════════════════════════════════════════════════
-
 class LevelConfig {
   final int level;
   final String name;
@@ -82,10 +78,6 @@ class LevelConfig {
     ),
   ];
 }
-
-// ══════════════════════════════════════════════════════════════
-// SOUND MANAGER  (singleton, all calls wrapped in try/catch)
-// ══════════════════════════════════════════════════════════════
 
 class Vec2 { double x, y; Vec2(this.x, this.y); }
 
@@ -141,7 +133,4 @@ class ActivePowerUp {
   ActivePowerUp({required this.type, required this.duration});
 }
 
-// ══════════════════════════════════════════════════════════════
-// SHARED PAINTERS  (stars, corners, hex-logo, grid)
-// ══════════════════════════════════════════════════════════════
 

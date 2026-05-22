@@ -1,4 +1,4 @@
-# Space Shooter Game 🚀
+# Ultimate Space War 🚀
 
 A premium, arcade-style space shooter game built with Flutter. Protect the galaxy from swarms of alien bugs using an evolving fighter jet! 
 

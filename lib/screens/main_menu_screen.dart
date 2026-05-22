@@ -194,7 +194,7 @@ class _MainMenuState extends State<MainMenuScreen> with TickerProviderStateMixin
               const SizedBox(height: 12),
               ShaderMask(
                 shaderCallback: (b) => const LinearGradient(colors: [Colors.cyanAccent, Colors.white, Colors.blueAccent]).createShader(b),
-                child: const Text('SPACE SHOOTER', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900, letterSpacing: 6, color: Colors.white)),
+                child: const Text('ULTIMATE SPACE WAR', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, letterSpacing: 4, color: Colors.white)),
               ),
               const SizedBox(height: 6),
               Container(
@@ -257,7 +257,7 @@ class _MainMenuState extends State<MainMenuScreen> with TickerProviderStateMixin
               ),
             )),
             const Padding(padding: EdgeInsets.only(bottom: 14),
-                child: Text('©2026 Space Shooter •  v1.0.0',
+                child: Text('©2026 Ultimate Space War •  v1.0.0',
                     style: TextStyle(color: Colors.white24, fontSize: 11, letterSpacing: 4, fontWeight: FontWeight.bold))),
           ])),
           // Corners

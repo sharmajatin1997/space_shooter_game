@@ -72,10 +72,6 @@ class _HexLogoPainter extends CustomPainter {
   @override bool shouldRepaint(covariant _HexLogoPainter o) => o.glow != glow;
 }
 
-// ══════════════════════════════════════════════════════════════
-// SPLASH SCREEN
-// ══════════════════════════════════════════════════════════════
-
 class _SplashShipPainter extends CustomPainter {
   @override
   void paint(Canvas c, Size s) {

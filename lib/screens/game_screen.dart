@@ -100,8 +100,6 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
-  // ── UPDATE ──────────────────────────────
-
   void _updateStars(double dt) {
     for (final s in _stars) { s.y += s.speed * dt; if (s.y > _h) { s.y = 0; s.x = _rng.nextDouble() * _w; } }
   }
