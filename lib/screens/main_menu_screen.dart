@@ -190,7 +190,7 @@ class _MainMenuState extends State<MainMenuScreen> with TickerProviderStateMixin
             const SizedBox(height: 20),
             // Header with floating logo
             Transform.translate(offset: Offset(0, _float.value), child: Column(children: [
-              CustomPaint(painter: _HexLogoPainter(_glow.value), size: const Size(80, 80)),
+              Image.asset('assets/ic_logo.png', width: 80, height: 80),
               const SizedBox(height: 12),
               ShaderMask(
                 shaderCallback: (b) => const LinearGradient(colors: [Colors.cyanAccent, Colors.white, Colors.blueAccent]).createShader(b),

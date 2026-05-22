@@ -125,10 +125,9 @@ class _SplashState extends State<SplashScreen> with TickerProviderStateMixin {
                     shape: BoxShape.circle,
                     boxShadow: [BoxShadow(color: Colors.cyanAccent.withOpacity(_glow.value * 0.28), blurRadius: 60, spreadRadius: 20)],
                   )),
-                  CustomPaint(painter: _HexLogoPainter(_glow.value), size: const Size(96, 96)),
+                  Image.asset('assets/ic_logo.png', width: 150, height: 150),
                 ]),
               )),
-              const SizedBox(height: 20),
               ScaleTransition(scale: _logoScale, child: FadeTransition(opacity: _logoOpacity,
                 child: Column(children: [
                   _glowTitle('SPACE', _glow.value), _glowTitle('SHOOTER', _glow.value),
