@@ -21,7 +21,8 @@ class _GameScreenState extends State<GameScreen> {
 
   Vec2 _playerPos = Vec2(0, 0);
   static const double _pSize = 24.0;
-  double _playerTarget = 0, _shootCd = 0;
+  Vec2 _playerTarget = Vec2(0, 0);
+  double _shootCd = 0;
   static const double _shootInterval = 0.18;
 
   final List<Bullet>   _bullets  = [];
@@ -62,7 +63,7 @@ class _GameScreenState extends State<GameScreen> {
       _h = MediaQuery.of(context).size.height;
       _buildStars();
       _playerPos = Vec2(_w / 2, _h - 100);
-      _playerTarget = _playerPos.x;
+      _playerTarget = Vec2(_w / 2, _h - 100);
       _lastTime = DateTime.now();
       _loop = Timer.periodic(const Duration(milliseconds: 16), (_) => _tick());
       _snd.playBgm(widget.settings);
@@ -105,8 +106,10 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _updatePlayer(double dt) {
-    _playerPos.x += (_playerTarget - _playerPos.x) * min(1.0, dt * 13);
+    _playerPos.x += (_playerTarget.x - _playerPos.x) * min(1.0, dt * 13);
+    _playerPos.y += (_playerTarget.y - _playerPos.y) * min(1.0, dt * 13);
     _playerPos.x = _playerPos.x.clamp(_pSize, _w - _pSize);
+    _playerPos.y = _playerPos.y.clamp(_pSize, _h - _pSize);
     _shootCd -= dt;
     if (_shootCd <= 0) { _shootCd = _shootInterval; _fire(); }
     if (_activePU != null) { _activePU!.duration -= dt; if (_activePU!.duration <= 0) _activePU = null; }
@@ -339,8 +342,14 @@ class _GameScreenState extends State<GameScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF050A14),
       body: GestureDetector(
-        onPanUpdate: (d) { if (_gState == GState.playing) _playerTarget = d.localPosition.dx; },
-        onTapDown:   (d) { if (_gState == GState.playing) _playerTarget = d.localPosition.dx; },
+        onPanUpdate: (d) { 
+          if (_gState == GState.playing) { 
+            _playerTarget.x += d.delta.dx * 1.5; 
+            _playerTarget.y += d.delta.dy * 1.5; 
+            _playerTarget.x = _playerTarget.x.clamp(_pSize, _w - _pSize); 
+            _playerTarget.y = _playerTarget.y.clamp(_pSize, _h - _pSize); 
+          } 
+        },
         child: Stack(children: [
           CustomPaint(painter: _GamePainter(
             stars: _stars, bullets: _bullets, enemies: _enemies,
