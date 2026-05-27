@@ -103,18 +103,19 @@ class _TrailPainter extends CustomPainter {
 }
 
 class _GamePainter extends CustomPainter {
-  final List<StarBg>  stars; final List<Bullet>   bullets;
+  final List<StarBg>  stars; final List<MeteorBg> meteors; final List<Bullet>   bullets;
   final List<Enemy>   enemies; final List<Particle> particles;
   final List<PowerUp> powerUps; final Vec2 playerPos;
   final double playerSize; final GState gState; final ActivePowerUp? activePU;
 
-  _GamePainter({required this.stars, required this.bullets, required this.enemies,
+  _GamePainter({required this.stars, required this.meteors, required this.bullets, required this.enemies,
     required this.particles, required this.powerUps, required this.playerPos,
     required this.playerSize, required this.gState, required this.activePU});
 
   @override
   void paint(Canvas canvas, Size size) {
     _drawStars(canvas);
+    _drawMeteors(canvas);
     _drawPowerUps(canvas);
     _drawBullets(canvas);
     _drawEnemies(canvas);
@@ -125,6 +126,20 @@ class _GamePainter extends CustomPainter {
   void _drawStars(Canvas canvas) {
     final p = Paint();
     for (final s in stars) { p.color = Colors.white.withOpacity(s.opacity * 0.8); canvas.drawCircle(Offset(s.x, s.y), s.size, p); }
+  }
+
+  void _drawMeteors(Canvas canvas) {
+    for (final m in meteors) {
+      final speed = sqrt(m.speedX * m.speedX + m.speedY * m.speedY);
+      final dx = (m.speedX / speed) * m.length;
+      final dy = (m.speedY / speed) * m.length;
+      
+      canvas.drawLine(
+        Offset(m.x, m.y), 
+        Offset(m.x - dx, m.y - dy), 
+        Paint()..color = m.color..strokeWidth = m.size..strokeCap = StrokeCap.round
+      );
+    }
   }
 
   void _drawPowerUps(Canvas canvas) {

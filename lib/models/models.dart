@@ -133,4 +133,10 @@ class ActivePowerUp {
   ActivePowerUp({required this.type, required this.duration});
 }
 
+class MeteorBg {
+  double x, y, speedX, speedY, size, length;
+  Color color;
+  MeteorBg({required this.x, required this.y, required this.speedX, required this.speedY, required this.size, required this.length, required this.color});
+}
+
 

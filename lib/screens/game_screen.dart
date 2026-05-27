@@ -29,6 +29,7 @@ class _GameScreenState extends State<GameScreen> {
   final List<Enemy>    _enemies  = [];
   final List<Particle> _particles = [];
   final List<StarBg>   _stars    = [];
+  final List<MeteorBg> _meteors  = [];
   final List<PowerUp>  _powerUps = [];
 
   ActivePowerUp? _activePU;
@@ -44,7 +45,7 @@ class _GameScreenState extends State<GameScreen> {
 
   // Difficulty scaler (in-game wave)
   double get _speedMult => widget.levelCfg.speedMultiplier * (1.0 + (_wave - 1) * 0.03);
-  int    get _hpBonus   => widget.levelCfg.hpBonus + (_wave ~/ 3);
+  int    get _hpBonus   => widget.levelCfg.hpBonus + (_wave ~/ 5);
 
   // Level banner
   bool _showBanner = true;
@@ -87,6 +88,7 @@ class _GameScreenState extends State<GameScreen> {
     if (dt > 0.1 || _gState != GState.playing) return;
     setState(() {
       _updateStars(dt);
+      _updateMeteors(dt);
       _updatePlayer(dt);
       _updateBullets(dt);
       _updateEnemies(dt);
@@ -103,6 +105,26 @@ class _GameScreenState extends State<GameScreen> {
 
   void _updateStars(double dt) {
     for (final s in _stars) { s.y += s.speed * dt; if (s.y > _h) { s.y = 0; s.x = _rng.nextDouble() * _w; } }
+  }
+
+  void _updateMeteors(double dt) {
+    if (_rng.nextDouble() < 0.015) { 
+      final isRightToLeft = _rng.nextBool();
+      _meteors.add(MeteorBg(
+        x: isRightToLeft ? _w + 50 : -50,
+        y: _rng.nextDouble() * _h * 0.7,
+        speedX: (isRightToLeft ? -1 : 1) * (150 + _rng.nextDouble() * 200),
+        speedY: 50 + _rng.nextDouble() * 150,
+        size: 1 + _rng.nextDouble() * 2,
+        length: 20 + _rng.nextDouble() * 50,
+        color: Colors.white.withOpacity(0.3 + _rng.nextDouble() * 0.4),
+      ));
+    }
+    for (final m in _meteors) {
+      m.x += m.speedX * dt;
+      m.y += m.speedY * dt;
+    }
+    _meteors.removeWhere((m) => m.x < -100 || m.x > _w + 100 || m.y > _h + 100);
   }
 
   void _updatePlayer(double dt) {
@@ -212,8 +234,9 @@ class _GameScreenState extends State<GameScreen> {
     if (_spawnTimer <= 0) {
       _spawnTimer = _spawnInterval;
       _spawnEnemy();
-      // Higher waves spawn 2 enemies at once
-      if (_wave >= 4) _spawnEnemy();
+      // Occasionally spawn extra enemy on higher waves instead of always
+      if (_wave >= 4 && _rng.nextDouble() < 0.25) _spawnEnemy();
+      if (_wave >= 7 && _rng.nextDouble() < 0.20) _spawnEnemy();
     }
   }
 
@@ -305,7 +328,8 @@ class _GameScreenState extends State<GameScreen> {
     final nw = (_score ~/ 300) + 1;
     if (nw != _wave) {
       _wave = nw;
-      _spawnInterval = max(0.3, widget.levelCfg.baseSpawnInterval - (_wave - 1) * 0.06);
+      // Tone down how fast they spawn
+      _spawnInterval = max(0.7, widget.levelCfg.baseSpawnInterval - (_wave - 1) * 0.04);
     }
   }
 
@@ -353,7 +377,7 @@ class _GameScreenState extends State<GameScreen> {
         },
         child: Stack(children: [
           CustomPaint(painter: _GamePainter(
-            stars: _stars, bullets: _bullets, enemies: _enemies,
+            stars: _stars, meteors: _meteors, bullets: _bullets, enemies: _enemies,
             particles: _particles, powerUps: _powerUps,
             playerPos: _playerPos, playerSize: _pSize,
             gState: _gState, activePU: _activePU,
