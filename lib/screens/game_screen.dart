@@ -140,6 +140,7 @@ class _GameScreenState extends State<GameScreen> {
     for (final e in _enemies) {
       e.pos.y += e.speed * dt;
       e.pos.x += sin(e.pos.y * 0.03) * 1.5;
+      e.pos.x = e.pos.x.clamp(e.size, _w - e.size);
       if (e.pos.y > _h + 20) {
         e.active = false; _lives--;
         _snd.vibrate(widget.settings, heavy: true);
